@@ -104,7 +104,7 @@ if len(documents) > MAX_DOCS:
 ### Running the example
 
 ```bash
-python example.py
+uv run streamlit run streamlit_app.py
 ```
 
 You should see:
