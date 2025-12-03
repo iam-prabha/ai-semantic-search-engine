@@ -3,17 +3,6 @@ from main import SemanticSearchEngine
 from langchain_core.documents import Document
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-
-# Load .env only for local development
-load_dotenv()
-
-def get_env(key: str):
-    """Read from Streamlit Cloud secrets or local .env automatically."""
-    return st.secrets.get(key) or os.getenv(key)
-
-GOOGLE_API_KEY = get_env("GOOGLE_API_KEY")
-PINECONE_API_KEY = get_env("PINECONE_API_KEY")
 
 # Page configuration
 st.set_page_config(
