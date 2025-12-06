@@ -65,20 +65,10 @@ If you send too many embedding requests (especially when indexing a large PDF), 
 
 ### How this project avoids exhausting quota too quickly
 
-1. **Limit number of documents/pages per run**
-   - In `example.py`, we slice the loaded documents to the first `MAX_DOCS` items:
-
-```python
-MAX_DOCS = 30
-if len(documents) > MAX_DOCS:
-    documents = documents[:MAX_DOCS]
-    print(f\"Truncated documents to first {MAX_DOCS} items to stay within quota.\")
-```
-
-2. **Chunking**
+1. **Chunking**
    - `RecursiveCharacterTextSplitter` uses a reasonable `chunk_size` to avoid creating too many chunks for each document.
 
-3. **Clear 429 handling**
+2. **Clear 429 handling**
    - In `main.py`, `build_index` wraps the embedding flow in a `try/except` block catching `GoogleGenerativeAIError`:
    - When a 429 or quota-related error occurs, it prints a clear message explaining:
      - That the Gemini embedding quota has been exceeded
@@ -94,7 +84,6 @@ if len(documents) > MAX_DOCS:
      - `https://ai.dev/usage?tab=rate-limit`
 
 2. **Reduce load further**
-   - Lower `MAX_DOCS` in `example.py` for initial tests (e.g., 10 instead of 30).
    - Use smaller documents or split very large PDFs into multiple files and index them over multiple days.
 
 3. **Wait for daily reset or increase limits**
